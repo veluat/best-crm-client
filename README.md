@@ -1,35 +1,37 @@
-# laxo-crm-client
+# Best CRM Kanban Board
 
-This template should help get you started developing with Vue 3 in Vite.
+Тестовый проект клиентской части для отображения сделок в воронке продаж Best CRM с возможностью изменения их статусов через канбан-доску.
 
-## Recommended IDE Setup
+## Функциональность
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- 📌 Просмотр сделок в виде канбан-доски с колонками статусов
+- 🖱️ Перетаскивание карточек между статусами (drag-and-drop)
+- 🔄 Автоматическое обновление данных
+- 📱 Адаптивный дизайн (десктоп, планшет, мобильные устройства)
 
-## Customize configuration
+## Технологии
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- Vue 3 (Composition API)
+- Pinia (управление состоянием)
+- Vue Router (навигация)
+- Axios (HTTP-запросы)
+- SCSS (стилизация)
 
-## Project Setup
+## Требования
 
-```sh
-npm install
-```
+- Node.js (версия 16.x или выше)
+- npm (версия 8.x или выше)
 
-### Compile and Hot-Reload for Development
+## Установка и запуск
 
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+1. **Клонировать репозиторий**:
+   ```bash
+   git clone https://github.com/veluat/best-crm-client.git
+   cd best-crm-client
+   ```
+   
+2. **Установить зависимости**:
+    ```bash
+   npm install
+   ```
+   
