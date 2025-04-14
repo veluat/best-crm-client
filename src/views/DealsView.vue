@@ -54,6 +54,10 @@
         }
       }
 
+      onMounted(() => {
+        loadInitialData()
+      })
+
       const changeFunnel = async (funnelId) => {
         await dealsStore.setCurrentFunnel(funnelId)
       }

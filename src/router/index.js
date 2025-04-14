@@ -12,6 +12,10 @@ export const routes = [
     path: '/login',
     name: 'login',
     component: () => import('@/components/LoginForm.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/'
   }
 ]
 
@@ -24,8 +28,17 @@ router.beforeEach(async (to) => {
   const dealsStore = useDealsStore()
 
   if (to.meta.requiresAuth && !dealsStore.sid) {
-    return { name: 'login' }
+    return {
+      name: 'login',
+      query: { redirect: to.fullPath }
+    }
   }
+
+  if (to.meta.requiresGuest && dealsStore.sid) {
+    return { name: 'deals' }
+  }
+
+  return true
 })
 
 export default router

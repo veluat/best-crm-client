@@ -5,7 +5,7 @@
         <h1 class="app-title">Best CRM</h1>
         <div v-if="isAuthenticated" class="header-actions">
           <span class="user-email">{{ userEmail }}</span>
-          <button @click="handleLogout" class="logout-button">
+          <button @click="handleLogout" class="logout-button" aria-label="Выйти из системы">
             <span class="logout-text">Выйти</span>
             <span class="logout-icon">→</span>
           </button>
@@ -24,13 +24,12 @@
   import { computed } from 'vue'
   import { useDealsStore } from './stores/deals'
   import LoginForm from './components/LoginForm.vue'
-  import { useRouter } from 'vue-router'
+  import router from '@/router/index.js'
 
   export default {
     components: { LoginForm },
     setup() {
       const dealsStore = useDealsStore()
-      const index = useRouter()
 
       const isAuthenticated = computed(() => !!dealsStore.sid)
       const userEmail = computed(() => {
@@ -39,7 +38,9 @@
 
       const handleLogout = async () => {
         await dealsStore.logout()
-        await router.push('/login')
+        if (router.currentRoute.value.path !== '/login') {
+          await router.push('/login')
+        }
       }
 
       return {

@@ -38,9 +38,8 @@ export const useDealsStore = defineStore('deals', {
 
     async logout() {
       localStorage.removeItem('laxo_sid')
+      this.$reset()
       this.sid = null
-      this.funnels = []
-      this.currentFunnelId = null
     },
 
     async makeRequest(requestData) {
@@ -60,23 +59,30 @@ export const useDealsStore = defineStore('deals', {
       }
     },
 
+    async fetchData(entity, method, params = {}) {
+      try {
+        const response = await this.makeRequest([{
+          class: entity,
+          method,
+          param: params
+        }])
+        return response[0]?.response || []
+      } catch (error) {
+        console.error(`Error in ${entity}.${method}:`, error)
+        throw error
+      }
+    },
+
     async fetchFunnels() {
       this.loading = true
       try {
-        const response = await this.makeRequest([{
-          class: "funnel",
-          method: "get_list",
-          param: {}
-        }])
-
-        this.funnels = response[0]?.response || []
+        this.funnels = await this.fetchData('funnel', 'get_list')
         if (this.funnels.length > 0 && !this.currentFunnelId) {
           this.currentFunnelId = this.funnels[0].funnel_id
         }
         return this.funnels
       } catch (error) {
         this.error = 'Ошибка загрузки воронок'
-        console.error(error)
         return []
       } finally {
         this.loading = false
@@ -84,54 +90,33 @@ export const useDealsStore = defineStore('deals', {
     },
 
     async setCurrentFunnel(funnelId) {
-      if (this.funnels.some(f => f.funnel_id === funnelId)) {
-        this.currentFunnelId = funnelId
-        await this.fetchInitialData()
+      if (!this.funnels.some(f => f.funnel_id === funnelId)) {
+        throw new Error('Invalid funnel ID')
       }
+      this.currentFunnelId = funnelId
+      await this.fetchInitialData()
     },
 
     async fetchInitialData() {
+      if (!this.currentFunnelId) return
+
       this.loading = true
       try {
-        if (!this.currentFunnelId) return
-
-        const [statusesRes] = await Promise.all([
-          this.makeRequest([{
-            class: "order_status",
-            method: "get_list",
-            param: { funnel_id: this.currentFunnelId }
-          }])
-        ])
-
-        this.statuses = statusesRes[0]?.response || []
-        await this.fetchDeals()
-      } catch (error) {
-        this.error = 'Ошибка загрузки данных'
-        console.error(error)
-      } finally {
-        this.loading = false
-      }
-    },
-
-    async fetchDeals() {
-      this.loading = true
-      try {
-        if (!this.currentFunnelId) return
-
-        const response = await this.makeRequest([{
-          class: "order",
-          method: "get_list",
-          param: {
+        const [statuses, deals] = await Promise.all([
+          this.fetchData('order_status', 'get_list', {
+            funnel_id: this.currentFunnelId
+          }),
+          this.fetchData('order', 'get_list', {
             funnel_id: this.currentFunnelId,
             deleted: null,
             field_filter_ids: []
-          }
-        }])
+          })
+        ])
 
-        this.deals = response[0]?.response || []
+        this.statuses = statuses
+        this.deals = deals
       } catch (error) {
-        this.error = 'Ошибка загрузки сделок'
-        console.error(error)
+        this.error = 'Ошибка загрузки данных'
       } finally {
         this.loading = false
       }
@@ -139,18 +124,17 @@ export const useDealsStore = defineStore('deals', {
 
     async changeDealStatus(orderId, statusId) {
       try {
-        await this.makeRequest([{
-          class: "order",
-          method: "set_status",
-          param: { order_id: orderId, order_status_id: statusId }
-        }])
+        await this.fetchData('order', 'set_status', {
+          order_id: orderId,
+          order_status_id: statusId
+        })
 
         const deal = this.deals.find(d => d.order_id === orderId)
         if (deal) deal.order_status_id = statusId
+
         return true
       } catch (error) {
         this.error = 'Ошибка изменения статуса'
-        console.error(error)
         return false
       }
     }
