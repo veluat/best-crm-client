@@ -1,0 +1,67 @@
+@import 'variables';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $text-color;
+}
+
+button {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+input, select {
+  padding: 0.3rem 0.5rem;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.card {
+  background: $white;
+  border-radius: $card-border-radius;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: $base-padding;
+}
+
+.loading, .error {
+  padding: 2rem;
+  text-align: center;
+}
+
+.error {
+  color: $error-color;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: $light-gray;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $scrollbar-thumb-color;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $scrollbar-thumb-hover-color;
+}

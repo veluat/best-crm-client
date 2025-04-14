@@ -87,46 +87,35 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  @import '@/assets/scss/all';
+
   .funnel-selector {
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    background-color: #f1f1f1;
-    border-radius: 4px;
+    margin-bottom: $base-padding;
+    padding: $small-padding;
+    background-color: $light-gray;
+    border-radius: $border-radius;
   }
 
   .funnel-selector label {
-    margin-right: 0.5rem;
+    margin-right: $small-padding;
   }
 
   .funnel-selector select {
-    padding: 0.3rem 0.5rem;
-    border-radius: 4px;
-    border: 1px solid #ddd;
     min-width: 200px;
   }
 
   .no-funnel,
   .no-deals {
-    padding: 1rem;
-    background-color: #fff3cd;
-    border-radius: 4px;
-    margin: 1rem 0;
-    color: #856404;
-  }
-
-  .loading,
-  .error {
-    padding: 2rem;
-    text-align: center;
-  }
-
-  .error {
-    color: #ff4444;
+    padding: $base-padding;
+    background-color: $warning-color;
+    border-radius: $border-radius;
+    margin: $base-padding 0;
+    color: $warning-text-color;
   }
 
   .deals-view {
     height: 100%;
-    padding: 1rem;
+    padding: $base-padding;
   }
 </style>

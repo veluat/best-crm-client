@@ -1,18 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import DealsView from './views/DealsView.vue'
-import { useDealsStore } from './stores/deals'
+import { useDealsStore } from '@/stores/deals'
 
-const routes = [
+export const routes = [
   {
     path: '/',
     name: 'deals',
-    component: DealsView,
+    component: () => import('@/views/DealsView.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('./components/LoginForm.vue')
+    component: () => import('@/components/LoginForm.vue')
   }
 ]
 
@@ -21,12 +20,11 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to) => {
   const dealsStore = useDealsStore()
+
   if (to.meta.requiresAuth && !dealsStore.sid) {
-    next('/login')
-  } else {
-    next()
+    return { name: 'login' }
   }
 })
 

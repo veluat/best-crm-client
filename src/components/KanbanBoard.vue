@@ -88,7 +88,9 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  @import '@/assets/scss/all';
+
   .kanban-container {
     width: 100%;
     height: 100%;
@@ -109,16 +111,16 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background: #f1f1f1;
-    border-radius: 10px;
+    background: $light-gray;
+    border-radius: $status-header-border-radius;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     overflow: hidden;
   }
 
   .status-header {
     padding: 12px 16px;
-    background: #2c3e50;
-    color: white;
+    background: $primary-color;
+    color: $white;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -136,8 +138,8 @@
   }
 
   .deal-count {
-    background: #42b983;
-    color: white;
+    background: $secondary-color;
+    color: $white;
     border-radius: 12px;
     padding: 2px 10px;
     font-size: 12px;
@@ -157,62 +159,37 @@
   }
 
   .deal-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    padding: 14px;
+    @extend .card;
     cursor: grab;
-    border-left: 4px solid #42b983;
-    transition: all 0.2s ease;
-  }
+    border-left: 4px solid $secondary-color;
 
-  .deal-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-  .deal-card h3 {
-    margin: 0 0 6px 0;
-    font-size: 14px;
-    font-weight: 600;
-    color: #2c3e50;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    h3 {
+      margin: 0 0 6px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: $text-color;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-  .deal-card p {
-    margin: 0;
-    color: #7f8c8d;
-    font-size: 13px;
+    p {
+      margin: 0;
+      color: $muted-text-color;
+      font-size: 13px;
+    }
   }
 
   .drag-over {
     background-color: #f0fdf4;
-    box-shadow: inset 0 0 0 2px #42b983;
+    box-shadow: inset 0 0 0 2px $secondary-color;
   }
 
-  /* Scrollbar styles */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 3px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #bdc3c7;
-    border-radius: 3px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #95a5a6;
-  }
-
-  /* Responsive adjustments */
   @media (max-width: 1024px) {
     .kanban-board {
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -237,10 +214,6 @@
     .status-column {
       min-height: 200px;
     }
-
-    .deals-list {
-      grid-template-columns: 1fr;
-    }
   }
 
   @media (max-width: 374px) {
@@ -258,7 +231,6 @@
     }
   }
 
-  /* Firefox specific fixes */
   @-moz-document url-prefix() {
     .status-column {
       min-height: 0;

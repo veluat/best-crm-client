@@ -66,72 +66,69 @@ export default {
 }
 </script>
 
-<style scoped>
-.login-form {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
+<style scoped lang="scss">
+  @import '@/assets/scss/all';
 
-.login-form h2 {
-  margin-top: 0;
-  text-align: center;
-  color: #42b983;
-}
+  .login-form {
+    @extend .card;
+    max-width: 400px;
+    margin: 2rem auto;
+    box-shadow: 0 2px 10px $shadow-color;
+  }
 
-.form-group {
-  margin-bottom: 1.5rem;
-}
+  .login-form h2 {
+    margin-top: 0;
+    padding-bottom: 1.5rem;
+    text-align: center;
+    color: $secondary-color;
+  }
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
+  .form-group {
+    margin-bottom: 1.5rem;
 
-.form-group input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-}
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
 
-.login-button {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #42b983;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+    }
+  }
 
-.login-button:hover {
-  background-color: #369f6d;
-}
+  .login-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: $secondary-color;
+    color: $white;
+    border: none;
+    border-radius: $border-radius;
+    font-size: 1rem;
 
-.login-button:disabled {
-  background-color: #a0d9bb;
-  cursor: not-allowed;
-}
+    &:hover {
+      background-color: darken($secondary-color, 10%);
+    }
 
-.error-message {
-  margin-top: 1rem;
-  color: #ff4444;
-  text-align: center;
-}
+    &:disabled {
+      background-color: lighten($secondary-color, 20%);
+      cursor: not-allowed;
+    }
+  }
 
-.domain-info {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid #eee;
-  text-align: center;
-  color: #666;
-}
+  .error-message {
+    margin-top: $base-padding;
+    color: $error-color;
+    text-align: center;
+  }
+
+  .domain-info {
+    margin-top: 1.5rem;
+    padding-top: $base-padding;
+    border-top: 1px solid $border-color;
+    text-align: center;
+    color: $muted-text-color;
+  }
 </style>

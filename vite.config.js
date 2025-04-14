@@ -7,6 +7,13 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/assets/scss/variables.scss";`
+      }
+    }
+  },
   server: {
     proxy: {
       '/api': {

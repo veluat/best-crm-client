@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header class="app-header">
-      <div class="header-content">
+      <div class="header-content container">
         <h1 class="app-title">Best CRM</h1>
         <div v-if="isAuthenticated" class="header-actions">
           <span class="user-email">{{ userEmail }}</span>
@@ -13,7 +13,7 @@
       </div>
     </header>
 
-    <main class="app-main">
+    <main class="app-main container">
       <router-view v-if="isAuthenticated" />
       <LoginForm v-else />
     </main>
@@ -30,7 +30,7 @@
     components: { LoginForm },
     setup() {
       const dealsStore = useDealsStore()
-      const router = useRouter()
+      const index = useRouter()
 
       const isAuthenticated = computed(() => !!dealsStore.sid)
       const userEmail = computed(() => {
@@ -51,40 +51,30 @@
   }
 </script>
 
-<style>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+<style lang="scss">
+  @import '@/assets/scss/all';
 
   #app {
-    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
 
   .app-header {
-    background-color: #2c3e50;
-    color: white;
-    padding: 0 1.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: $primary-color;
+    color: $white;
+    padding: 0 $base-padding;
+    box-shadow: 0 2px 8px $shadow-color;
     position: sticky;
     top: 0;
     z-index: 100;
   }
 
   .header-content {
-    max-width: 1200px;
-    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
+    height: $header-height;
   }
 
   .app-title {
@@ -105,21 +95,19 @@
   }
 
   .logout-button {
-    background-color: #e74c3c;
-    color: white;
+    background-color: $danger-color;
+    color: $white;
     border: none;
-    border-radius: 4px;
+    border-radius: $border-radius;
     padding: 0.4rem 0.8rem;
-    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    transition: all 0.2s ease;
-  }
 
-  .logout-button:hover {
-    background-color: #c0392b;
-    transform: translateX(2px);
+    &:hover {
+      background-color: $danger-hover-color;
+      transform: translateX(2px);
+    }
   }
 
   .logout-icon {
@@ -128,17 +116,10 @@
 
   .app-main {
     flex: 1;
-    padding: 1.5rem;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
+    padding: $base-padding;
   }
 
   @media (max-width: 768px) {
-    .header-content {
-      padding: 0 1rem;
-    }
-
     .app-title {
       font-size: 1.1rem;
     }
@@ -160,7 +141,7 @@
     }
 
     .app-main {
-      padding: 1rem;
+      padding: $small-padding;
     }
   }
 </style>
