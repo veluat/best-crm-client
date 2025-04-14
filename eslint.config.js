@@ -12,7 +12,8 @@ export default [
     files: ['**/*.vue'],
     rules: {
       'vue/multi-word-component-names': 'off',
-      'vue/html-self-closing': 'error'
+      'vue/html-self-closing': 'error',
+      'vue/padding-line-between-blocks': 'off'
     }
   },
   {
